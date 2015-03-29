@@ -7,8 +7,6 @@ Gamebuino gb;
 
 // Player variables
 Player player1;
-//PlayerAction XInput = NONE;
-//PlayerAction YInput = NONE;
 
 // World variables
 byte world[9] = {
@@ -54,16 +52,6 @@ void showTitleScreen()
 
 void updateGame()
 {
-	/*getInput();
-
-	handleXInput();
-	handleWorldCollisions();
-	handleScreenEdgeCollisions();
-	
-	handleYInput();
-	handleWorldCollisions();
-	handleScreenEdgeCollisions();*/
-
 	handleInput();
 	handleWorldCollisions();
 	handleScreenEdgeCollisions();
@@ -74,11 +62,7 @@ void drawGame()
 	drawPlayer();
 	drawWorld();
 
-	#if DEBUG
-
-	drawDebugInfo();
-
-	#endif
+	drawDebugInfo(player1);
 }
 
 void handleInput()
@@ -102,41 +86,6 @@ void handleInput()
 	}
 }
 
-/*void getInput()
-{
-	XInput = NONE;
-
-	if(gb.buttons.repeat(BTN_LEFT, 1))
-	{
-		XInput = LEFT;
-	}
-	else if(gb.buttons.repeat(BTN_RIGHT, 1))
-	{
-		XInput = RIGHT;
-	}
-
-	YInput = NONE;
-
-	if(gb.buttons.repeat(BTN_UP, 1))
-	{
-		YInput = UP;
-	}
-	else if(gb.buttons.repeat(BTN_DOWN, 1))
-	{
-		YInput = DOWN;
-	}
-}
-
-void handleXInput()
-{
-	player1.move(XInput);
-}
-
-void handleYInput()
-{
-	player1.move(YInput);
-}*/
-
 void handleWorldCollisions()
 {
 	Rectangle playerBoundingBox = player1.getBoundingBox();
@@ -147,12 +96,8 @@ void handleWorldCollisions()
 	if(testChunk.collideWithRectangle(playerBoundingBox))
 	{
 		player1.revertMove();
-
-		#if DEBUG && SHOW_WHEN_COLLIDED
-
-		gb.display.println("collided");
-
-		#endif
+		
+		showDebugMessage("collided");
 	}
 }
 
@@ -189,34 +134,3 @@ void drawWorld()
 {
 	testChunk.render();
 }
-
-#if DEBUG
-
-void drawDebugInfo()
-{
-	#if SHOW_PLAYER_BOX_COORDS
-
-	Rectangle playerBoundingBox = player1.getBoundingBox();
-	signed char top = playerBoundingBox.getTopEdge();
-	signed char bottom = playerBoundingBox.getBottomEdge();
-	signed char left = playerBoundingBox.getLeftEdge();
-	signed char right = playerBoundingBox.getRightEdge();
-
-	gb.display.print(top);
-	gb.display.print(" ");
-	gb.display.print(bottom);
-	gb.display.print(" ");
-	gb.display.print(left);
-	gb.display.print(" ");
-	gb.display.println(right);
-
-	#endif
-
-	#if SHOW_FRAME_COUNT
-	
-	gb.display.println(gb.frameCount);
-	
-	#endif
-}
-
-#endif

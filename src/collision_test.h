@@ -4,6 +4,7 @@
 #include "collision_test_globals.h"
 #include "player.h"
 #include "chunk.h"
+#include "debug.h"
 
 // Player variables
 const byte INITIAL_PLAYER_X = 0;
@@ -28,11 +29,5 @@ void handleWorldCollisions();
 void handleScreenEdgeCollisions();
 void drawPlayer();
 void drawWorld();
-
-#if DEBUG
-
-void drawDebugInfo();
-
-#endif
 
 #endif

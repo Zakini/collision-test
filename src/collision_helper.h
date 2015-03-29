@@ -2,6 +2,7 @@
 #define COLLISION_HELPER_H
 
 #include "vector.h"
+#include "rectangle.h"
 
 Vector collideRectRect(Rectangle collider, Rectangle collidee);
 
